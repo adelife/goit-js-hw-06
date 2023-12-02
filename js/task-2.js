@@ -1,16 +1,40 @@
+// Створи клас Storage, який створюватиме об'єкти для управління складом товарів.
+// Клас
+//  очікує лише один аргумент
+//  — початковий масив товарів, який записується до створеного об'єкта в
+//  приватну властивість items.
 
-function formatMessage(message, maxLength) {
-   let  stringLength = message.length;
-    if (stringLength <= maxLength) {
-        return message;
-    } else if (stringLength >= maxLength) {
-        let stringSlice = message.slice(0, maxLength);
-        return (`${stringSlice}...`);
+// Оголоси наступні методи класу:
+
+// getItems() — повертає масив поточних товарів у приватній властивості items.
+//     addItem(newItem) — приймає новий товар newItem і додає його до масиву товарів
+// у
+// приватну властивість items об'єкта.
+// removeItem(itemToRemove) — приймає рядок з назвою товару itemToRemove і
+// видаляє його з масиву товарів у приватній властивості items об'єкта.
+class Storage {
+  #items;
+  constructor(items = []) {
+    this.#items = items;
+  }
+  getItems() {
+    return this.#items;
+  }
+  addItem(newItem) {
+    this.#items.push(newItem);
+  }
+  removeItem(itemToRemove) {
+    const index = this.#items.indexOf(itemToRemove);
+    if (index === -1) {
+      return;
     }
+    return this.#items.splice(index, 1);
+  }
 }
-console.log(formatMessage("Curabitur ligula sapien", 16)); // "Curabitur ligula..."
-console.log(formatMessage("Curabitur ligula sapien", 23)); // "Curabitur ligula sapien"
-console.log(formatMessage("Vestibulum facilisis purus nec", 20)); // "Vestibulum facilisis..."
-console.log(formatMessage("Vestibulum facilisis purus nec", 30)); // "Vestibulum facilisis purus nec"
-console.log(formatMessage("Nunc sed turpis a felis in nunc fringilla", 15)); // "Nunc sed turpis..."
-console.log(formatMessage("Nunc sed turpis a felis in nunc fringilla", 41)); // "Nunc sed turpis a felis in nunc fringilla"
+
+const storage = new Storage(['Nanitoids', 'Prolonger', 'Antigravitator']);
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator"]
+storage.addItem('Droid');
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator", "Droid"]
+storage.removeItem('Prolonger');
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
